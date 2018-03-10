@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<div>
+    <% include  model/header.html %>
+</div>
+<ul>
+    <% var arr = [1,2,3,4,5] %>
+    <% for(var i = 0; i < arr.length; i++){ %>
+        <li><%=arr[i] %></li>
+    <% } %>
+</ul>
+<div>
+    <% include  model/footer.html %>
+</div>
+</body>
+</html>

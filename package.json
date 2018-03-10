@@ -1,0 +1,40 @@
+{
+  "name": "bilibili",
+  "version": "1.0.0",
+  "description": "a bilibili like website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --progress --colors --open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sishenhei7/bilibili.git"
+  },
+  "keywords": [
+    "ejs",
+    "scss",
+    "bootstrap",
+    "es6",
+    "jQuery"
+  ],
+  "author": "sishenhei7",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sishenhei7/bilibili/issues"
+  },
+  "homepage": "https://github.com/sishenhei7/bilibili#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^0.28.10",
+    "ejs-compiled-loader": "^1.1.0",
+    "html-webpack-plugin": "^3.0.6",
+    "style-loader": "^0.20.3",
+    "webpack": "^4.1.1",
+    "webpack-cli": "^2.0.11",
+    "webpack-dev-server": "^3.1.1"
+  }
+}
