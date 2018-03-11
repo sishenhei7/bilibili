@@ -1,6 +1,8 @@
 // webpack.config.js
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+//const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   devtool: 'none',
@@ -10,7 +12,8 @@ module.exports = {
   },
 
   output: {
-    path: __dirname + '/build',
+    path: path.resolve(__dirname, 'build'),
+    //publicPath: '/assets/', //相对路径替换
     filename: 'bundle-[hash].js'
   },
 
@@ -23,9 +26,9 @@ module.exports = {
   },
 
   watchOptions: {
-    poll: 1000,//监测修改的时间(ms)
-    aggregateTimeout: 500,//防止重复按键，500毫秒内算按一次
-    ignored: /node_modules/,//不监测
+    poll: 1000, //监测修改的时间(ms)
+    aggregateTimeout: 500, //防止重复按键，500毫秒内算按一次
+    ignored: /node_modules/, //不监测
   },
 
   module: {
@@ -34,19 +37,59 @@ module.exports = {
         test: /\.jsx|\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader'
+          loader: 'babel-loader',
+          options: {
+            cacheDirectory: true, //启用缓存
+            plugins: ['transform-runtime']
+          }
         }
       },
       {
         test: /\.css$/,
         use: [
+          'style-loader',
           {
-            loader: 'style-loader'
-          }, {
             loader: 'css-loader',
             options: {
-              modules: false,
-              localIdentName: '[name]__[local]'
+              modules: false, //是否启用css-module
+              localIdentName: '[name]__[local]' //类名转换
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: [
+                require('autoprefixer')
+              ]
+            }
+          },
+          'sass-loader'
+        ]
+      },
+      {
+        test: /\.(png|jpg|gif|svg)$/i,
+        use:[
+          'url-loader?limit=8192&name=[name]-[hash:5].[ext]',
+          {
+            loader: 'image-webpack-loader',
+            options: {
+                    mozjpeg: {
+                      progressive: true,
+                      quality: 65
+                    },
+                    optipng: {
+                      enabled: false,
+                    },
+                    pngquant: {
+                      quality: 80,
+                      speed: 4
+                    },
+                    gifsicle: {
+                      interlaced: false,
+                    },
+                    webp: {
+                      quality: 75
+                    }
             }
           }
         ]
@@ -55,12 +98,14 @@ module.exports = {
   },
   plugins: [
       new webpack.BannerPlugin('This file is created by sishenhei7'),
+      //使用模板生成html文件
       new HtmlWebpackPlugin({
         filename:'index.html',
         template: 'ejs-compiled-loader!model/template.html',
         title:'this is index',
         chunks: ['index']
       }),
-      new webpack.HotModuleReplacementPlugin()//热加载插件
+      new webpack.HotModuleReplacementPlugin() //热加载插件
+      //new ExtractTextPlugin('styles.css') //把CSS文件分离出来
     ]
 };
