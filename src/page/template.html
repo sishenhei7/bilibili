@@ -5,8 +5,8 @@
     <title>Document</title>
 </head>
 <body>
-<div>
-    <% include  model/header.html %>
+<div id="header">
+  <% include  src/page/header.html %>
 </div>
 <ul>
     <% var arr = [1,2,3,4,5] %>
@@ -15,7 +15,8 @@
     <% } %>
 </ul>
 <div>
-    <% include  model/footer.html %>
+    <% include  src/page/footer.html %>
 </div>
+<div><%= htmlWebpackPlugin.options.data.name %></div>
 </body>
 </html>

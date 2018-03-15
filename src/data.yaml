@@ -1,0 +1,16 @@
+# header-navCon
+navCon:
+ -
+  class: nav-item home
+  href: #
+  title: 主站2
+  i: bili-icon
+  name: 主站2
+  div: 0
+ -
+  class: nav-item home
+  href: #
+  title: 画友3
+  name: 画友
+  div: 0
+

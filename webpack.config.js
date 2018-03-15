@@ -2,18 +2,19 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const haha = require('./src/page/haha.js')
 //const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   devtool: 'none',
 
   entry: {
-    index: './src/page/index.js'
+    index: './src/app.js'
   },
 
   output: {
     path: path.resolve(__dirname, 'build'),
-    publicPath: '/dist/', //相对路径替换
+    //publicPath: '/dist/', //相对路径替换
     filename: 'bundle-[hash].js'
   },
 
@@ -93,19 +94,36 @@ module.exports = {
             }
           }
         ]
+      },
+      {
+        test: /\.(tpl|ejs)$/,
+        loader: 'ejs-loader?variable=data'
+      },
+      {
+        test: /\.yaml$/,
+        use: [ 'json-loader', 'yaml-loader' ]
       }
     ]
   },
+  externals: {
+      jquery: 'jQuery'
+    },
   plugins: [
       new webpack.BannerPlugin('This file is created by sishenhei7'),
       //使用模板生成html文件
       new HtmlWebpackPlugin({
+        data: haha,
         filename:'index.html',
-        template: 'ejs-compiled-loader!src/page/template.html',
+        template: 'index.html',
         title:'this is index',
         chunks: ['index']
       }),
       new webpack.HotModuleReplacementPlugin() //热加载插件
       //new ExtractTextPlugin('styles.css') //把CSS文件分离出来
+      //new CommonsChunkPlugin({
+      //   name: 'vendor',
+      //   minChunks: 3
+      //  })
+
     ]
 };
